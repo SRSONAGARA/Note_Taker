@@ -15,16 +15,37 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Note App'),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            TextField(
+              decoration: InputDecoration(
+                  hintText: 'Search here...',
+                  suffixIcon: const Icon(Icons.search),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Expanded(
               child: GridView.builder(
                   itemCount: 16,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
+                      childAspectRatio: 1.5,
                       mainAxisSpacing: 4,
                       crossAxisSpacing: 4),
                   itemBuilder: (context, index) {
