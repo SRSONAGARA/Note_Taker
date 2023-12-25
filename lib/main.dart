@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/config/routes/app_routes.dart';
+import 'package:note_app/features/register/register_screen.dart';
 import 'features/dashboard/home_screen.dart';
 
 void main() {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 20)),
       ),
       themeMode: ThemeMode.system,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: RegistrationScreen.routeName,
       routes: AppRoutes.getAppRoutes,
     );
   }
