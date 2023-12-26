@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       initialRoute: RegistrationScreen.routeName,
+      // initialRoute: HomeScreen.routeName,
       routes: AppRoutes.getAppRoutes,
     );
   }
