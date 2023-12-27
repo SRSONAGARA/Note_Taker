@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/config/routes/app_routes.dart';
+import 'package:note_app/features/login/login_screen.dart';
 import 'package:note_app/features/register/register_screen.dart';
 import 'features/dashboard/home_screen.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 20)),
       ),
       themeMode: ThemeMode.system,
-      initialRoute: RegistrationScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       // initialRoute: HomeScreen.routeName,
       routes: AppRoutes.getAppRoutes,
     );

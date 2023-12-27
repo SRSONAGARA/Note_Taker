@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/features/dashboard/home_screen.dart';
+import 'package:note_app/features/login/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String routeName = '/Registration-Screen';
@@ -143,6 +144,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         'Sign Up',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Have an Account?",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, LoginScreen.routeName);
+                          },
+                          child: const Text('Login'))
+                    ],
+                  )
                 ],
               ),
             ),
