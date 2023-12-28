@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/features/dashboard/home_screen.dart';
 import 'package:note_app/features/register/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -97,14 +98,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                  Row(
+                 /* Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
                           onPressed: () {},
                           child: const Text('Forgot your Password?')),
                     ],
-                  ),
+                  ),*/
                   const SizedBox(
                     height: 20,
                   ),
@@ -113,15 +114,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent),
                       onPressed: () async {
-                        if (formKey.currentState!.validate()) {
+                        Navigator.of(context).pushNamed(HomeScreen.routeName);
+                        /*if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
-
-                          /*await Future.delayed(const Duration(seconds: 1));
-                          await Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (_) => HomeScreen()),
-                                  (route) => false);*/
-                        }
+                        }*/
                       },
                       child: const Text('LOGIN')),
                   Row(

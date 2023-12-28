@@ -135,10 +135,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   ElevatedButton(
                       onPressed: () async {
-                        if (formKey.currentState!.validate()) {
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                       /* if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
-                          Navigator.pushNamed(context, HomeScreen.routeName);
-                        }
+
+                        }*/
                       },
                       child: const Text(
                         'Sign Up',

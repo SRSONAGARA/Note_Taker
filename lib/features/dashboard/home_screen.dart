@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/features/new_note/new_note_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/Home-Screen';
@@ -13,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Note App'),
         actions: [
@@ -85,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(AddNoteScreen.routeName);
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
