@@ -70,7 +70,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           },
                           child: const Text('cancel'))),
                   const SizedBox(
-                    width: 20,
+                    width: 10,
                   ),
                   Expanded(
                       child: ElevatedButton(

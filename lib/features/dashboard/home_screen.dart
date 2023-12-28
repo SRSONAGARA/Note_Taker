@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   hintText: 'Search here...',
                   suffixIcon: const Icon(Icons.search),
                   contentPadding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 13),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50))),
             ),

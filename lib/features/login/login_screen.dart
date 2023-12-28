@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                 /* Row(
+                  /* Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
@@ -111,15 +111,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent),
+                          backgroundColor: const Color(0xFFFE6902)),
                       onPressed: () async {
                         Navigator.of(context).pushNamed(HomeScreen.routeName);
                         /*if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
                         }*/
                       },
-                      child: const Text('LOGIN')),
+                      child: const Text(
+                        'LOGIN',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

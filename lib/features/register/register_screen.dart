@@ -134,16 +134,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 40,
                   ),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFFE6902)),
                       onPressed: () async {
                         Navigator.pushNamed(context, HomeScreen.routeName);
-                       /* if (formKey.currentState!.validate()) {
+                        /* if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
 
                         }*/
                       },
                       child: const Text(
                         'Sign Up',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       )),
                   const SizedBox(
                     height: 10,
