@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/features/new_note/new_note_screen.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/Home-Screen';
@@ -10,6 +11,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool showShimmer = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        if (mounted) {
+          setState(() {
+            showShimmer = false;
+          });
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,45 +61,65 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 10,
             ),
             Expanded(
-              child: GridView.builder(
-                  itemCount: 16,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.5,
-                      mainAxisSpacing: 4,
-                      crossAxisSpacing: 4),
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Stack(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Title',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+              child: showShimmer
+                  ? Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: GridView.builder(
+                          itemCount: 20,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1.5,
+                                  mainAxisSpacing: 4,
+                                  crossAxisSpacing: 4),
+                          itemBuilder: (context, index) {
+                            return const Card(
+                              child: Stack(
+                                children: [],
+                              ),
+                            );
+                          }))
+                  : GridView.builder(
+                      itemCount: 20,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 1.5,
+                              mainAxisSpacing: 4,
+                              crossAxisSpacing: 4),
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Stack(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Title',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('Description'),
+                                  ],
                                 ),
-                                Text('Description'),
-                              ],
-                            ),
+                              ),
+                              Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.favorite_border,
+                                        size: 20,
+                                      ))),
+                            ],
                           ),
-                          Positioned(
-                              right: 0,
-                              top: 0,
-                              child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.favorite_border,
-                                    size: 20,
-                                  ))),
-                        ],
-                      ),
-                    );
-                  }),
+                        );
+                      }),
             ),
           ],
         ),
