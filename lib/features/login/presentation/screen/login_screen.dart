@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/features/dashboard/home_screen.dart';
-import 'package:note_app/features/register/register_screen.dart';
+import '../../../dashboard/presentation/screen/home_screen.dart';
+import '../../../register/presentation/screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/Login-Screen';

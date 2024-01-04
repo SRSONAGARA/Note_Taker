@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/config/routes/app_routes.dart';
-import 'package:note_app/features/login/login_screen.dart';
-import 'package:note_app/features/register/register_screen.dart';
-import 'features/dashboard/home_screen.dart';
 
+import 'features/login/presentation/screen/login_screen.dart';
 void main() {
   runApp(const MyApp());
 }

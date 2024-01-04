@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/features/new_note/new_note_screen.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../../new_note/presentation/screen/new_note_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/Home-Screen';
