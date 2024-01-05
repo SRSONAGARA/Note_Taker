@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/config/routes/app_routes.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'features/home_screen/presentation/screen/home_screen.dart';
 import 'features/login/presentation/screen/login_screen.dart';
-void main() {
-  runApp(const MyApp());
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  bool isLoggedIn = await checkToken();
+  runApp(MyApp(
+    isLoggedIn: isLoggedIn,
+  ));
+}
+
+Future<bool> checkToken() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String? token = pref.getString('token');
+  return token != null && token.isNotEmpty;
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +47,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 20)),
       ),
       themeMode: ThemeMode.system,
-      initialRoute: LoginScreen.routeName,
-      // initialRoute: HomeScreen.routeName,
+      initialRoute: isLoggedIn ? HomeScreen.routeName : LoginScreen.routeName,
       routes: AppRoutes.getAppRoutes,
     );
   }

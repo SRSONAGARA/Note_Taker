@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../dashboard/presentation/screen/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:note_app/features/home_screen/presentation/cubits/home_screen_cubit.dart';
+import 'package:note_app/features/login/presentation/cubits/login_bloc.dart';
+import 'package:note_app/features/login/presentation/cubits/login_state.dart';
+import '../../../home_screen/presentation/screen/home_screen.dart';
 import '../../../register/presentation/screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -98,31 +103,44 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                  /* Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                          onPressed: () {},
-                          child: const Text('Forgot your Password?')),
-                    ],
-                  ),*/
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFE6902)),
-                      onPressed: () async {
-                        Navigator.of(context).pushNamed(HomeScreen.routeName);
-                        /*if (formKey.currentState!.validate()) {
-                          formKey.currentState!.save();
-                        }*/
-                      },
-                      child: const Text(
-                        'LOGIN',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
+                  BlocConsumer<LoginCubit, LoginState>(
+                      builder: (context, state) {
+                    if (state is LoginLoadingState) {
+                      return const CircularProgressIndicator();
+                    }
+                    return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFFE6902)),
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+                            BlocProvider.of<LoginCubit>(context).loginApiCall(
+                                email: emailController.text,
+                                password: passwordController.text);
+                          }
+                        },
+                        child: const Text(
+                          'LOGIN',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ));
+                  }, listener: (context, state) {
+                    if (state is LoginSuccessState) {
+                      String msg = state.msg;
+                      Fluttertoast.showToast(msg: msg);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          HomeScreen.routeName, (route) => false);
+                    } else if (state is LoginErrorState) {
+                      String msg = state.msg;
+                      Fluttertoast.showToast(msg: msg);
+                    } else if (state is LoginCredInvalidState) {
+                      String msg = state.msg;
+                      Fluttertoast.showToast(msg: msg);
+                    }
+                  }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

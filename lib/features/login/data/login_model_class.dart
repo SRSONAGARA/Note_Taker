@@ -1,17 +1,17 @@
-class RegisterModelClass {
+class LoginModelClass {
   int status;
   bool success;
   String message;
   Data data;
 
-  RegisterModelClass({
+  LoginModelClass({
     required this.status,
     required this.success,
     required this.message,
     required this.data,
   });
 
-  factory RegisterModelClass.fromJson(Map<String, dynamic> json) => RegisterModelClass(
+  factory LoginModelClass.fromJson(Map<String, dynamic> json) => LoginModelClass(
     status: json["status"],
     success: json["success"],
     message: json["message"],
@@ -27,32 +27,52 @@ class RegisterModelClass {
 }
 
 class Data {
+  String token;
+  User user;
+
+  Data({
+    required this.token,
+    required this.user,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+    token: json["token"],
+    user: User.fromJson(json["user"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "token": token,
+    "user": user.toJson(),
+  };
+}
+
+class User {
+  String id;
   String name;
   String email;
-  String id;
   DateTime? timestamp;
   int? v;
 
-  Data({
+  User({
+    required this.id,
     required this.name,
     required this.email,
-    required this.id,
     this.timestamp,
     this.v,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json["_id"],
     name: json["name"],
     email: json["email"],
-    id: json["_id"],
     timestamp: DateTime.parse(json["timestamp"]),
     v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
+    "_id": id,
     "name": name,
     "email": email,
-    "_id": id,
     "timestamp": timestamp?.toIso8601String(),
     "__v": v,
   };
