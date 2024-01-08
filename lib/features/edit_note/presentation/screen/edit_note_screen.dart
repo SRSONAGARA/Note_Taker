@@ -1,49 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/common/color_constant.dart';
 
-class AddNoteScreen extends StatefulWidget {
-  static const String routeName = '/Add-Note-Screen';
-  const AddNoteScreen({super.key});
+import '../../../../common/color_constant.dart';
+
+class EditNoteScreen extends StatefulWidget {
+  static const String routeName = '/Edit-Note-Screen';
+  const EditNoteScreen({super.key});
 
   @override
-  State<AddNoteScreen> createState() => _AddNoteScreenState();
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
 }
 
-class _AddNoteScreenState extends State<AddNoteScreen> {
+class _EditNoteScreenState extends State<EditNoteScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
           iconTheme: const IconThemeData(color: ColorConstants.whiteColor),
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text('New Note')),
+          title: const Text('Edit Note')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Title:',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
               const Card(
                 child: TextField(
                   maxLines: null,
                   decoration: InputDecoration(
-                      hintText: 'Enter here...',
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                       border:
-                          UnderlineInputBorder(borderSide: BorderSide.none)),
+                      UnderlineInputBorder(borderSide: BorderSide.none)),
                 ),
               ),
               const SizedBox(
                 height: 10,
-              ),
-              const Text(
-                'Description:',
-                style: TextStyle(fontSize: 20, color: ColorConstants.greyColor),
               ),
               Card(
                 child: SizedBox(
@@ -51,11 +43,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                   child: const TextField(
                     maxLines: null,
                     decoration: InputDecoration(
-                        hintText: 'Enter here...',
                         contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                         border:
-                            UnderlineInputBorder(borderSide: BorderSide.none)),
+                        UnderlineInputBorder(borderSide: BorderSide.none)),
                   ),
                 ),
               ),

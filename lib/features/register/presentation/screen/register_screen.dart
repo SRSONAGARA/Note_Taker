@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:note_app/common/color_constant.dart';
 import 'package:note_app/features/register/presentation/cubits/register_bloc.dart';
 import 'package:note_app/features/register/presentation/cubits/register_state.dart';
 import '../../../login/presentation/screen/login_screen.dart';
@@ -30,7 +31,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      backgroundColor: ColorConstants.orangeColor100,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -51,12 +52,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Card(
                     child: TextFormField(
                       controller: nameController,
+                      textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 15, horizontal: 10),
                           border: InputBorder.none,
-                          prefixIcon:
-                              Icon(Icons.person_outline, color: Colors.orange),
+                          prefixIcon: Icon(Icons.person_outline,
+                              color: ColorConstants.orangeColor),
                           hintText: 'Enter your Name'),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -71,12 +73,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Card(
                     child: TextFormField(
                       controller: emailController,
+                      textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 15, horizontal: 10),
                           border: InputBorder.none,
-                          prefixIcon:
-                              Icon(Icons.email_outlined, color: Colors.orange),
+                          prefixIcon: Icon(Icons.email_outlined,
+                              color: ColorConstants.orangeColor),
                           hintText: 'Enter your E-mail'),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -96,12 +99,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Card(
                     child: TextFormField(
                       controller: passwordController,
+                      textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 15, horizontal: 10),
                           border: InputBorder.none,
-                          prefixIcon:
-                              Icon(Icons.lock_outline, color: Colors.orange),
+                          prefixIcon: Icon(Icons.lock_outline,
+                              color: ColorConstants.orangeColor),
                           hintText: 'Enter your Password'),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -121,13 +125,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       obscureText: context
                           .select((RegistrationCubit cubit) => cubit.isObscure),
                       controller: confirmPasswordController,
+                      textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 10),
                           border: InputBorder.none,
                           prefixIcon: const Icon(
                             Icons.lock_outline,
-                            color: Colors.orange,
+                            color: ColorConstants.orangeColor,
                           ),
                           suffixIcon: IconButton(
                               onPressed: () {
@@ -162,7 +167,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     }
                     return ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFFE6902)),
+                            backgroundColor: ColorConstants.primaryColor),
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save();
@@ -176,7 +181,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                              color: ColorConstants.whiteColor,
+                              fontWeight: FontWeight.bold),
                         ));
                   }, listener: (context, state) {
                     if (state is RegistrationSuccessState) {
@@ -201,7 +207,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     children: [
                       const Text(
                         "Have an Account?",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: ColorConstants.blackColor),
                       ),
                       TextButton(
                           onPressed: () {

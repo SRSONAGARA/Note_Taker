@@ -8,6 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
 
+  bool isObscure = false;
+
+  void togglePswVisibility(){
+    isObscure = !isObscure;
+    emit(PswVisibilityChangeState(isObscure));
+  }
+
   Future<void> loginApiCall(
       {required String email, required String password}) async {
     try {

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/common/color_constant.dart';
+import 'package:note_app/features/edit_note/presentation/screen/edit_note_screen.dart';
 import 'package:note_app/features/home_screen/presentation/cubits/home_screen_state.dart';
+import 'package:note_app/features/login/presentation/screen/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../new_note/presentation/screen/new_note_screen.dart';
@@ -15,37 +19,56 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool showShimmer = true;
-
   @override
   void initState() {
     super.initState();
     BlocProvider.of<HomeScreenCubit>(context).getAllNoteApi();
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        if (mounted) {
-          setState(() {
-            showShimmer = false;
-          });
-        }
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: ColorConstants.whiteColor),
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Note App'),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Are you sure you want to Logout?'),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () async {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    LoginScreen.routeName, (route) => false);
+                                SharedPreferences pref =
+                                    await SharedPreferences.getInstance();
+                                pref.clear();
+                              },
+                              child: const Text('Yes')),
+                          ElevatedButton(
+                            onPressed: () async {
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: ColorConstants.primaryColor),
+                            child: const Text(
+                              'No',
+                              style:
+                                  TextStyle(color: ColorConstants.whiteColor),
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+              },
               icon: const Icon(
-                Icons.more_vert,
-                color: Colors.white,
+                Icons.logout_outlined,
+                color: ColorConstants.whiteColor,
               ))
         ],
       ),
@@ -72,10 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           BlocProvider.of<HomeScreenCubit>(context);
                       if (state is HomeScreenLoadingState) {
                         return Shimmer.fromColors(
-                            baseColor: Colors.grey.shade300,
-                            highlightColor: Colors.grey.shade100,
+                            baseColor: ColorConstants.greyColor300,
+                            highlightColor: ColorConstants.greyColor100,
                             child: GridView.builder(
-                                itemCount: 20,
+                                itemCount: 16,
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
@@ -100,41 +123,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisSpacing: 4,
                                   crossAxisSpacing: 4),
                           itemBuilder: (context, index) {
-                            return Card(
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          homeScreenCubit.getAllNoteModelClass
-                                                  .data![index].title ??
-                                              '',
-                                          style: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(homeScreenCubit
-                                                .getAllNoteModelClass
-                                                .data![index]
-                                                .description ??
-                                            ''),
-                                      ],
+                            return InkWell(
+                              onTap: (){
+                                Navigator.of(context).pushNamed(EditNoteScreen.routeName);
+                              },
+                              borderRadius: BorderRadius.circular(15),
+                              child: Card(
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            homeScreenCubit.getAllNoteModelClass
+                                                    .data![index].title ??
+                                                '',
+                                            style: const TextStyle(fontSize: 20),
+                                          ),
+                                          Text(
+                                              homeScreenCubit.getAllNoteModelClass
+                                                      .data![index].description ??
+                                                  '',
+                                              style:
+                                                  const TextStyle(fontSize: 15)),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Positioned(
-                                      right: 0,
-                                      top: 0,
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.favorite_border,
-                                            size: 20,
-                                          ))),
-                                ],
+                                    Positioned(
+                                        right: 0,
+                                        top: 0,
+                                        child: IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.favorite_border,
+                                              size: 20,
+                                            ))),
+                                  ],
+                                ),
                               ),
                             );
                           });

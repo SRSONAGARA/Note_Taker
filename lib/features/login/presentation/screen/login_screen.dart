@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:note_app/features/home_screen/presentation/cubits/home_screen_cubit.dart';
 import 'package:note_app/features/login/presentation/cubits/login_bloc.dart';
 import 'package:note_app/features/login/presentation/cubits/login_state.dart';
+import '../../../../common/color_constant.dart';
 import '../../../home_screen/presentation/screen/home_screen.dart';
 import '../../../register/presentation/screen/register_screen.dart';
 
@@ -20,18 +20,16 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  bool isObscure = true;
-
   @override
   void initState() {
     super.initState();
-    isObscure = true;
+    BlocProvider.of<LoginCubit>(context).togglePswVisibility();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[100],
+      backgroundColor: ColorConstants.orangeColor100,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -51,12 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   Card(
                     child: TextFormField(
                       controller: emailController,
+                      textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 15, horizontal: 10),
                           border: InputBorder.none,
-                          prefixIcon:
-                              Icon(Icons.email_outlined, color: Colors.orange),
+                          prefixIcon: Icon(Icons.email_outlined,
+                              color: ColorConstants.orangeColor),
                           hintText: 'Enter your E-mail'),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -75,23 +74,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Card(
                     child: TextFormField(
-                      obscureText: isObscure,
+                      obscureText:
+                          context.select((LoginCubit cubit) => cubit.isObscure),
                       controller: passwordController,
+                      textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 10),
                           border: InputBorder.none,
                           prefixIcon: const Icon(Icons.lock_outline,
-                              color: Colors.orange),
+                              color: ColorConstants.orangeColor),
                           suffixIcon: IconButton(
                               onPressed: () {
-                                setState(() {
-                                  isObscure = !isObscure;
-                                });
+                                context
+                                    .read<LoginCubit>()
+                                    .togglePswVisibility();
                               },
-                              icon: isObscure
-                                  ? const Icon(Icons.visibility)
-                                  : const Icon(Icons.visibility_off)),
+                              icon: Icon(context.select(
+                                      (LoginCubit cubit) => cubit.isObscure)
+                                  ? Icons.visibility
+                                  : Icons.visibility_off)),
                           hintText: 'Enter your Password'),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -113,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFFE6902)),
+                            backgroundColor: ColorConstants.primaryColor),
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save();
@@ -125,7 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Text(
                           'LOGIN',
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                              color: ColorConstants.whiteColor,
+                              fontWeight: FontWeight.bold),
                         ));
                   }, listener: (context, state) {
                     if (state is LoginSuccessState) {
@@ -146,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Text(
                         "Don't have an Account?",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: ColorConstants.blackColor),
                       ),
                       TextButton(
                           onPressed: () {

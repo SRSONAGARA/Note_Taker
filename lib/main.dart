@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/common/color_constant.dart';
 import 'package:note_app/config/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'features/home_screen/presentation/screen/home_screen.dart';
@@ -29,20 +30,22 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        colorScheme: const ColorScheme.light(primary: Color(0xFFFE6902)),
+        colorScheme:
+            const ColorScheme.light(primary: ColorConstants.primaryColor),
         appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
-                color: Colors.white,
+                color: ColorConstants.whiteColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 20)),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
-        colorScheme: const ColorScheme.dark(primary: Color(0xFFFE6902))
-            .copyWith(brightness: Brightness.dark),
+        colorScheme:
+            const ColorScheme.dark(primary: ColorConstants.primaryColor)
+                .copyWith(brightness: Brightness.dark),
         appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
-                color: Colors.white,
+                color: ColorConstants.whiteColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 20)),
       ),
