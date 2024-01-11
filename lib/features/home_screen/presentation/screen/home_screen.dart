@@ -124,8 +124,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisSpacing: 4),
                           itemBuilder: (context, index) {
                             return InkWell(
-                              onTap: (){
-                                Navigator.of(context).pushNamed(EditNoteScreen.routeName);
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    EditNoteScreen.routeName,
+                                    arguments: {
+                                      'id': homeScreenCubit
+                                          .getAllNoteModelClass
+                                          .data![index]
+                                          .id,
+                                      'title': homeScreenCubit
+                                          .getAllNoteModelClass
+                                          .data![index]
+                                          .title,
+                                      'description': homeScreenCubit
+                                          .getAllNoteModelClass
+                                          .data![index]
+                                          .description,
+                                    });
                               },
                               borderRadius: BorderRadius.circular(15),
                               child: Card(
@@ -141,14 +156,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                             homeScreenCubit.getAllNoteModelClass
                                                     .data![index].title ??
                                                 '',
-                                            style: const TextStyle(fontSize: 20),
+                                            style:
+                                                const TextStyle(fontSize: 20),
                                           ),
                                           Text(
-                                              homeScreenCubit.getAllNoteModelClass
-                                                      .data![index].description ??
+                                              homeScreenCubit
+                                                      .getAllNoteModelClass
+                                                      .data![index]
+                                                      .description ??
                                                   '',
-                                              style:
-                                                  const TextStyle(fontSize: 15)),
+                                              style: const TextStyle(
+                                                  fontSize: 15)),
                                         ],
                                       ),
                                     ),

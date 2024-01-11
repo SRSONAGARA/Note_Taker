@@ -11,9 +11,16 @@ class EditNoteScreen extends StatefulWidget {
 }
 
 class _EditNoteScreenState extends State<EditNoteScreen> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    titleController.text = args['title'] ?? '';
+    descriptionController.text = args['description'] ?? '';
+    return Scaffold(
       appBar: AppBar(
           iconTheme: const IconThemeData(color: ColorConstants.whiteColor),
           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -24,14 +31,15 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Card(
+              Card(
                 child: TextField(
+                  controller: titleController,
                   maxLines: null,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       contentPadding:
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                       border:
-                      UnderlineInputBorder(borderSide: BorderSide.none)),
+                          UnderlineInputBorder(borderSide: BorderSide.none)),
                 ),
               ),
               const SizedBox(
@@ -40,13 +48,14 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               Card(
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height / 2.5,
-                  child: const TextField(
+                  child: TextField(
+                    controller: descriptionController,
                     maxLines: null,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         contentPadding:
-                        EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                         border:
-                        UnderlineInputBorder(borderSide: BorderSide.none)),
+                            UnderlineInputBorder(borderSide: BorderSide.none)),
                   ),
                 ),
               ),
@@ -68,7 +77,9 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: ColorConstants.primaryColor),
-                          onPressed: () {},
+                          onPressed: () {
+
+                          },
                           child: const Text(
                             'Done',
                             style: TextStyle(
