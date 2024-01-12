@@ -3,4 +3,5 @@ class ApiConstant{
   static const registrationApi = '$baseUrl/register';
   static const loginApi = '$baseUrl/login';
   static const getAllNoteApi = '$baseUrl/getAllNote';
+  static const editNoteApi = '$baseUrl/editNote';
 }

@@ -126,21 +126,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             return InkWell(
                               onTap: () {
                                 Navigator.of(context).pushNamed(
-                                    EditNoteScreen.routeName,
-                                    arguments: {
-                                      'id': homeScreenCubit
-                                          .getAllNoteModelClass
-                                          .data![index]
-                                          .id,
-                                      'title': homeScreenCubit
-                                          .getAllNoteModelClass
-                                          .data![index]
-                                          .title,
-                                      'description': homeScreenCubit
-                                          .getAllNoteModelClass
-                                          .data![index]
-                                          .description,
-                                    });
+                                  EditNoteScreen.routeName,
+                                  arguments: {
+                                    'id': homeScreenCubit
+                                        .getAllNoteModelClass.data![index].id,
+                                    'title': homeScreenCubit
+                                        .getAllNoteModelClass
+                                        .data![index]
+                                        .title,
+                                    'description': homeScreenCubit
+                                        .getAllNoteModelClass
+                                        .data![index]
+                                        .description,
+                                  },
+                                );
                               },
                               borderRadius: BorderRadius.circular(15),
                               child: Card(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/features/edit_note/presentation/cubits/edit_note_cubit.dart';
 import 'package:note_app/features/edit_note/presentation/screen/edit_note_screen.dart';
 import 'package:note_app/features/home_screen/presentation/cubits/home_screen_cubit.dart';
 import 'package:note_app/features/login/presentation/cubits/login_bloc.dart';
@@ -19,6 +20,9 @@ class AppRoutes {
         HomeScreen.routeName: (_) => BlocProvider(
             create: (_) => HomeScreenCubit(), child: const HomeScreen()),
         AddNoteScreen.routeName: (_) => const AddNoteScreen(),
-        EditNoteScreen.routeName: (_) => const EditNoteScreen(),
+        EditNoteScreen.routeName: (_) => MultiBlocProvider(providers: [
+              BlocProvider(create: (_) => EditNoteCubit()),
+              BlocProvider(create: (_) => HomeScreenCubit())
+            ], child: const EditNoteScreen())
       };
 }
