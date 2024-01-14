@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/common/api_constant.dart';
-import 'package:note_app/features/register/data/register_model_class.dart';
 import 'package:note_app/features/register/presentation/cubits/register_state.dart';
 import 'package:http/http.dart' as http;
 

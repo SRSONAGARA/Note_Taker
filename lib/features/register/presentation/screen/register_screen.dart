@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:note_app/common/color_constant.dart';
-import 'package:note_app/features/register/presentation/cubits/register_bloc.dart';
+import 'package:note_app/features/register/presentation/cubits/register_cubit.dart';
 import 'package:note_app/features/register/presentation/cubits/register_state.dart';
 import '../../../login/presentation/screen/login_screen.dart';
 
@@ -42,7 +42,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Welcome to Note App',
+                    'Welcome',
                     style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
@@ -85,7 +85,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         if (value!.isEmpty) {
                           return "Email can't empty";
                         } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
-                            .hasMatch(value!)) {
+                            .hasMatch(value)) {
                           return "Enter Correct email";
                         } else {
                           return null;

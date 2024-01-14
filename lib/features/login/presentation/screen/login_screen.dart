@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:note_app/features/login/presentation/cubits/login_bloc.dart';
+import 'package:note_app/features/login/presentation/cubits/login_cubit.dart';
 import 'package:note_app/features/login/presentation/cubits/login_state.dart';
 import '../../../../common/color_constant.dart';
 import '../../../home_screen/presentation/screen/home_screen.dart';
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value!.isEmpty) {
                           return "Email can't empty";
                         } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
-                            .hasMatch(value!)) {
+                            .hasMatch(value)) {
                           return "Enter Correct email";
                         } else {
                           return null;

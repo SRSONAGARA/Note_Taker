@@ -6,11 +6,6 @@ class EditNoteLoadingState extends EditNoteState {}
 
 class EditNoteSuccessState extends EditNoteState {}
 
+class EditNoteTitleDescriptionEmptyState extends EditNoteState {}
+
 class EditNoteErrorState extends EditNoteState {}
-
-class EditNoteUpdatedState extends EditNoteState {
-  final String title;
-  final String description;
-
-  EditNoteUpdatedState({required this.title, required this.description});
-}

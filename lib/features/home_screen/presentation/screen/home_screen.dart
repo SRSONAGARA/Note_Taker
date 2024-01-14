@@ -6,8 +6,7 @@ import 'package:note_app/features/home_screen/presentation/cubits/home_screen_st
 import 'package:note_app/features/login/presentation/screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../../../new_note/presentation/screen/new_note_screen.dart';
+import '../../../new_note/presentation/screen/add_note_screen.dart';
 import '../cubits/home_screen_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,10 +18,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late HomeScreenCubit homeScreenCubit;
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HomeScreenCubit>(context).getAllNoteApi();
+    homeScreenCubit = BlocProvider.of<HomeScreenCubit>(context);
+    getAllNotes();
+  }
+
+  Future<void> getAllNotes() async {
+    await BlocProvider.of<HomeScreenCubit>(context).getAllNoteApi();
+  }
+
+  Future<void> onEditSuccess() async {
+    await getAllNotes();
+    searchController.clear();
+  }
+
+  Future<void> onAddNoteSuccess() async {
+    await getAllNotes();
+  }
+
+  void onSearch(String query) {
+    homeScreenCubit.filterNotes(query);
   }
 
   @override
@@ -46,12 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     LoginScreen.routeName, (route) => false);
                                 SharedPreferences pref =
-                                    await SharedPreferences.getInstance();
+                                await SharedPreferences.getInstance();
                                 pref.clear();
                               },
                               child: const Text('Yes')),
                           ElevatedButton(
-                            onPressed: () async {
+                            onPressed: () {
                               Navigator.of(context).pop();
                             },
                             style: ElevatedButton.styleFrom(
@@ -59,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Text(
                               'No',
                               style:
-                                  TextStyle(color: ColorConstants.whiteColor),
+                              TextStyle(color: ColorConstants.whiteColor),
                             ),
                           ),
                         ],
@@ -77,120 +96,122 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             TextField(
+              controller: searchController,
+              onChanged: onSearch,
               decoration: InputDecoration(
                   hintText: 'Search here...',
                   suffixIcon: const Icon(Icons.search),
                   contentPadding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 13),
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 13),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50))),
             ),
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-                child: BlocConsumer<HomeScreenCubit, HomeScreenState>(
-                    builder: (context, state) {
-                      HomeScreenCubit homeScreenCubit =
-                          BlocProvider.of<HomeScreenCubit>(context);
-                      if (state is HomeScreenLoadingState) {
-                        return Shimmer.fromColors(
-                            baseColor: ColorConstants.greyColor300,
-                            highlightColor: ColorConstants.greyColor100,
-                            child: GridView.builder(
-                                itemCount: 16,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 1.5,
-                                        mainAxisSpacing: 4,
-                                        crossAxisSpacing: 4),
-                                itemBuilder: (context, index) {
-                                  return const Card(
-                                    child: Stack(
-                                      children: [],
-                                    ),
-                                  );
-                                }));
-                      }
-                      return GridView.builder(
-                          itemCount:
-                              homeScreenCubit.getAllNoteModelClass.data!.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 1.5,
-                                  mainAxisSpacing: 4,
-                                  crossAxisSpacing: 4),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                  EditNoteScreen.routeName,
-                                  arguments: {
-                                    'id': homeScreenCubit
-                                        .getAllNoteModelClass.data![index].id,
-                                    'title': homeScreenCubit
-                                        .getAllNoteModelClass
-                                        .data![index]
-                                        .title,
-                                    'description': homeScreenCubit
-                                        .getAllNoteModelClass
-                                        .data![index]
-                                        .description,
-                                  },
-                                );
-                              },
-                              borderRadius: BorderRadius.circular(15),
-                              child: Card(
+            Expanded(child: BlocBuilder<HomeScreenCubit, HomeScreenState>(
+                builder: (context, state) {
+                  HomeScreenCubit homeScreenCubit =
+                  BlocProvider.of<HomeScreenCubit>(context);
+                  if (state is HomeScreenLoadingState) {
+                    return Shimmer.fromColors(
+                        baseColor: ColorConstants.greyColor300,
+                        highlightColor: ColorConstants.greyColor100,
+                        child: GridView.builder(
+                            itemCount: 10,
+                            gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 1.5,
+                                mainAxisSpacing: 4,
+                                crossAxisSpacing: 4),
+                            itemBuilder: (context, index) {
+                              return const Card(
                                 child: Stack(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            homeScreenCubit.getAllNoteModelClass
-                                                    .data![index].title ??
-                                                '',
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                          Text(
-                                              homeScreenCubit
-                                                      .getAllNoteModelClass
-                                                      .data![index]
-                                                      .description ??
-                                                  '',
-                                              style: const TextStyle(
-                                                  fontSize: 15)),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                        right: 0,
-                                        top: 0,
-                                        child: IconButton(
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.favorite_border,
-                                              size: 20,
-                                            ))),
-                                  ],
+                                  children: [],
                                 ),
-                              ),
+                              );
+                            }));
+                  }
+                  if (homeScreenCubit.getAllNoteModelClass.data!.isEmpty) {
+                    return const Center(
+                      child: Text("You haven't yet added any notes."),
+                    );
+                  }
+                  if (homeScreenCubit.filteredNotes.isEmpty) {
+                    return const Center(
+                      child: Text("No search items match."),
+                    );
+                  }
+                  return GridView.builder(
+                      itemCount: homeScreenCubit.filteredNotes.length,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1.5,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 4),
+                      itemBuilder: (context, index) {
+                        final note = homeScreenCubit.filteredNotes[index];
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              EditNoteScreen.routeName,
+                              arguments: {
+                                'id': note.id,
+                                'title': note.title,
+                                'description': note.description,
+                                'onEditSuccess': onEditSuccess
+                              },
                             );
-                          });
-                    },
-                    listener: (context, state) {})),
+                          },
+                          borderRadius: BorderRadius.circular(15),
+                          child: Card(
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          note.title ?? '',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 2,
+                                        child: Text(note.description ?? '',
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(fontSize: 15)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Positioned(
+                                    right: 5,
+                                    top: 5,
+                                    child: Icon(
+                                      Icons.edit,
+                                      size: 20,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+                })),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(AddNoteScreen.routeName);
+          Navigator.of(context).pushNamed(AddNoteScreen.routeName,
+              arguments: {'onAddNoteSuccess': onAddNoteSuccess});
         },
         tooltip: 'add note',
         child: const Icon(Icons.add),

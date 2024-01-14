@@ -12,6 +12,8 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
 
   GetAllNoteModelClass getAllNoteModelClass = GetAllNoteModelClass();
 
+  List<dynamic> filteredNotes = [];
+
   Future<void> getAllNoteApi() async {
     try {
       emit(HomeScreenLoadingState());
@@ -20,19 +22,30 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
       String? token = pref.getString('token');
       var response = await http
           .get(Uri.parse(url), headers: {"Authorization": "Bearer $token"});
-      print(response.statusCode);
       if (response.statusCode == 200) {
         getAllNoteModelClass =
             GetAllNoteModelClass.fromJson(jsonDecode(response.body));
+        filteredNotes = getAllNoteModelClass.data ?? [];
         emit(HomeScreenSuccessState());
       } else {
         getAllNoteModelClass =
             GetAllNoteModelClass.fromJson(jsonDecode(response.body));
         emit(HomeScreenErrorState());
-        print(getAllNoteModelClass.message);
       }
     } catch (e) {
       print(e);
     }
+  }
+
+  void filterNotes(String query) {
+    if (query.isEmpty) {
+      filteredNotes = getAllNoteModelClass.data ?? [];
+    } else {
+      filteredNotes = getAllNoteModelClass.data!
+          .where((note) =>
+              (note.title!.toLowerCase().contains(query.toLowerCase())))
+          .toList();
+    }
+    emit(HomeScreenFilteredState());
   }
 }
