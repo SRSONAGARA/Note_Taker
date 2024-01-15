@@ -65,7 +65,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           ),
                           Card(
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height / 1.7,
+                              height: MediaQuery.of(context).size.height / 3.7,
                               child: const TextField(
                                 maxLines: null,
                                 decoration: InputDecoration(
@@ -147,7 +147,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                       ),
                       Card(
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 1.7,
+                          height: MediaQuery.of(context).size.height / 3.7,
                           child: TextFormField(
                             controller: descriptionController,
                             maxLines: null,

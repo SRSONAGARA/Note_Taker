@@ -106,7 +106,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   ),
                   Card(
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.5,
+                      height: MediaQuery.of(context).size.height / 3,
                       child: TextFormField(
                         maxLines: null,
                         decoration: const InputDecoration(
@@ -176,7 +176,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                     ),
                     Card(
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 1.5,
+                        height: MediaQuery.of(context).size.height / 3,
                         child: TextFormField(
                           controller: descriptionController,
                           maxLines: null,

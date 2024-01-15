@@ -1,16 +1,22 @@
-# note_app
+<h1 align="center">Flutter Note App</h1>
 
-A new Flutter project.
+<p align="center">
+  This Flutter project is a simple note-taking app that allows users to register, login, and perform CRUD operations on notes through API calls. Users can retrieve all notes, add new notes, edit existing notes, and delete notes.
+</p>
 
-## Getting Started
+<p align="center">
+  <img src="assets/app_preview.jpg" alt="App Preview" width="20%">
+  <img src="assets/add_note.jpg" alt="App Preview" width="20%">
+  <img src="assets/edit_note.jpg" alt="App Preview" width="20%">
+</p>
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+* **User Authentication:** Users can register and login securely to access their notes.
+* **View All Notes:** Retrieve a list of all notes from the API.
+* **Add New Note:** Create and save a new note.
+* **Edit Note:** Modify the content of an existing note.
+* **Delete Note:** Remove a note from the app.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Dependencies
+- HTTP: For making HTTP requests.
