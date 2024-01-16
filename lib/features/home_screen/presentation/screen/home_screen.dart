@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Stack(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(10),
+                                  padding: const EdgeInsets.only(left: 10, top: 10,bottom: 10, right: 15),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -197,7 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     top: 5,
                                     child: Icon(
                                       Icons.edit,
-                                      size: 20,
+                                      size: 15,
+                                      color: ColorConstants.primaryColor,
                                     )),
                               ],
                             ),
